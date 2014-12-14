@@ -33,7 +33,6 @@ namespace MinecraftStatistics
       cobBiomes.SelectedIndex = 0;
       cobBlockTypes.SelectedIndex = 0;
 
-      //cobLevelDirectory.Text = @"C:\adt-bundle-windows-x86_64-20140321\PreChunk";
       if (System.IO.Directory.Exists(System.Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\.minecraft\\saves"))
       {
         string[] sLevels = System.IO.Directory.GetDirectories(System.Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\.minecraft\\saves");
@@ -137,6 +136,18 @@ namespace MinecraftStatistics
       libMinecraftStatistics.enumBiomes biome = getSelectedBiome();
 
       string sPath = cobLevelDirectory.Text;
+
+      if (!sPath.Contains(":"))
+      {
+        sPath = System.Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\.minecraft\\saves\\" + sPath;
+      }
+
+      if (!System.IO.File.Exists(sPath + "\\level.dat"))
+      {
+        txtResult.Text = "Make sure you have a correct level selected!";
+        btnGenerate.Enabled = true;
+        return;
+      }
 
       _mll = new libMinecraftStatistics.MinecraftLevelLoader(sPath);
       _mll.SetProgressHandler += new libMinecraftStatistics.SetProgressHandler(_mll_SetProgressHandler);
