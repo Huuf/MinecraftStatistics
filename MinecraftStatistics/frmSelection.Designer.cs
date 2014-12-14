@@ -201,6 +201,8 @@
       // 
       // cobLevelDirectory
       // 
+      this.cobLevelDirectory.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
       this.cobLevelDirectory.FormattingEnabled = true;
       this.cobLevelDirectory.Location = new System.Drawing.Point(96, 14);
       this.cobLevelDirectory.Name = "cobLevelDirectory";

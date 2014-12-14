@@ -168,7 +168,7 @@ namespace MinecraftStatistics
           new System.Threading.Thread(GetItemLocation).Start(blockType);
           return;
         case eStatisticType.Temples:
-          new System.Threading.Thread(GetTemples).Start(biome);
+          new System.Threading.Thread(GetTemples).Start();
           return;
         case eStatisticType.Biomes:
           new System.Threading.Thread(GetBiomes).Start();
@@ -694,11 +694,13 @@ namespace MinecraftStatistics
       Dictionary<string, ulong> combinedChestContent = new Dictionary<string, ulong>();
       for (int i = 0; i < chests.Length; i++) {
         Dictionary<string, int> currentChest = (Dictionary<string, int>)chests[i].Data;
-        foreach (string key in currentChest.Keys) {
-          if (!combinedChestContent.ContainsKey(key)) {
-            combinedChestContent.Add(key, 0);
+        if (currentChest != null) {
+          foreach (string key in currentChest.Keys) {
+            if (!combinedChestContent.ContainsKey(key)) {
+              combinedChestContent.Add(key, 0);
+            }
+            combinedChestContent[key] = combinedChestContent[key] + (ulong)currentChest[key];
           }
-          combinedChestContent[key] = combinedChestContent[key] + (ulong)currentChest[key];
         }
       }
 
@@ -716,7 +718,12 @@ namespace MinecraftStatistics
 
       sTMP += "\r\n\r\nAll chests + Items + Locations";
       for (int i = 0; i < chests.Length; i++) {
-        sTMP += "\r\n-" + chests[i].x + " " + chests[i].y + " " + chests[i].z + " = " + chests[i].Extra.Trim();
+        if (chests[i].Extra == null) {
+          sTMP += "\r\n-" + chests[i].x + " " + chests[i].y + " " + chests[i].z + " = Empty";
+        }
+        else {
+          sTMP += "\r\n-" + chests[i].x + " " + chests[i].y + " " + chests[i].z + " = " + chests[i].Extra.Trim();
+        }
       }
 
 
